@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLocation } from '@tanstack/react-router';
 
-import { ArrowLeftToLine } from 'lucide-react';
+import { PanelLeft } from 'lucide-react';
 
 import { Button } from '@heroui/button';
 
@@ -13,6 +13,9 @@ import { navItems } from '../mock';
 
 const SIDEBAR_COOKIE_NAME = '_tm_sidebar_state';
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
+
+const SIDEBAR_WIDTH = '16rem';
+const SIDEBAR_WIDTH_ICON = '3.25rem';
 
 export function Sidebar() {
   const { pathname } = useLocation();
@@ -30,31 +33,40 @@ export function Sidebar() {
   }
 
   return (
-    <div data-state={state} className="group peer hidden md:block">
-      <div className="relative h-svh w-64 bg-transparent transition-width duration-200 ease-linear group-data-[state=collapsed]:w-[3.25rem]" />
+    <div
+      data-state={state}
+      className="group peer hidden md:block"
+      style={
+        {
+          '--sidebar-width': SIDEBAR_WIDTH,
+          '--sidebar-width-icon': SIDEBAR_WIDTH_ICON,
+        } as React.CSSProperties
+      }
+    >
+      <div className="relative h-svh w-[--sidebar-width] bg-transparent transition-[width] duration-200 ease-linear group-data-[state=collapsed]:w-[--sidebar-width-icon]" />
 
-      <div className="fixed inset-y-0 left-0 hidden h-svh w-64 transition-[left,right,width] duration-200 ease-linear group-data-[state=collapsed]:w-[3.25rem] md:flex">
+      <div className="fixed inset-y-0 left-0 z-10 hidden h-svh w-[--sidebar-width] transition-[left,right,width] duration-200 ease-linear group-data-[state=collapsed]:w-[--sidebar-width-icon] md:flex">
         <div className="flex h-full w-full flex-col">
-          <div className="flex items-center justify-between gap-2 p-4 pb-2 group-data-[state=collapsed]:px-2">
-            <span className="font-medium text-black text-xl leading-5 group-data-[state=collapsed]:opacity-0">
+          <div className="flex items-center justify-between p-4 pb-2 group-data-[state=collapsed]:px-3">
+            <span className="font-medium text-black text-xl leading-5 transition-[width,opacity] duration-200 ease-linear group-data-[state=collapsed]:w-0 group-data-[state=collapsed]:opacity-0">
               timer
             </span>
 
             <div className="flex items-center gap-2">
               <Button
                 variant="light"
-                className="h-7 w-7 min-w-7 rounded-lg group-data-[state=collapsed]:opacity-0"
+                className="h-7 w-7 min-w-7 rounded-lg"
                 isIconOnly
                 onPress={toggleSidebar}
               >
-                <ArrowLeftToLine className="size-4" />
+                <PanelLeft className="size-4" />
                 <span className="sr-only">Toggle Sidebar</span>
               </Button>
 
               <img
                 src="https://github.com/carlosmfreitas2409.png"
                 alt="Carlos Freitas"
-                className="size-6 rounded-full ring-offset-1 transition-all hover:ring-2 hover:ring-default-foreground/40"
+                className="size-6 rounded-full ring-offset-1 transition-all hover:ring-2 hover:ring-default-foreground/40 group-data-[state=collapsed]:opacity-0"
               />
             </div>
           </div>
@@ -76,6 +88,7 @@ export function Sidebar() {
                           key={item.label}
                           item={item}
                           isActive={pathname === item.href}
+                          sidebarState={state}
                         />
                       );
                     })}

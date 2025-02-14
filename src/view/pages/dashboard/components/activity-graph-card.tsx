@@ -86,8 +86,8 @@ export function ActivityGraphCard() {
                     key={key}
                     content={`${formattedDuration} on ${formattedDate}`}
                     placement="bottom"
-                    delay={0}
                     closeDelay={0}
+                    disableAnimation
                   >
                     <div
                       className={cn(
