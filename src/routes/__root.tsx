@@ -1,7 +1,7 @@
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import { createRootRoute, Outlet } from '@tanstack/react-router';
 
-import { HeroUIProvider } from '@heroui/react';
+import { HeroUIProvider } from '@heroui/system';
 
 export const Route = createRootRoute({
   component: () => (
