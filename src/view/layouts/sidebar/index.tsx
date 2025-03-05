@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useLocation } from '@tanstack/react-router';
 
+import { motion } from 'motion/react';
+
 import { PanelLeft } from 'lucide-react';
 
 import { Button } from '@heroui/button';
@@ -10,6 +12,8 @@ import { SidebarMenuItem } from './sidebar-menu-item';
 import { SidebarGroup, SidebarGroupLabel } from './sidebar-group';
 
 import { navItems } from '../mock';
+import { cn } from '@heroui/theme';
+import { GlobResMark } from '@/assets/icons/globres-mark';
 
 const SIDEBAR_COOKIE_NAME = '_tm_sidebar_state';
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -47,7 +51,45 @@ export function Sidebar() {
 
       <div className="fixed inset-y-0 left-0 z-10 hidden h-svh w-[--sidebar-width] transition-[left,right,width] duration-200 ease-linear group-data-[state=collapsed]:w-[--sidebar-width-icon] md:flex">
         <div className="flex h-full w-full flex-col">
-          <div className="flex items-center justify-between p-4 pb-2 group-data-[state=collapsed]:px-3">
+          <div
+            className={cn(
+              'flex px-4 pb-2 md:pt-3.5',
+              isOpen
+                ? 'flex-row items-center justify-between'
+                : 'flex-row items-center justify-between gap-y-4 px-2 md:flex-col md:items-start md:justify-start',
+            )}
+          >
+            <GlobResMark className="size-9" />
+
+            <motion.div
+              key={isOpen ? 'header-expanded' : 'header-collapsed'}
+              className={cn(
+                'flex items-center gap-2',
+                isOpen ? 'flex-row' : 'flex-row md:flex-col-reverse',
+              )}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            >
+              <Button
+                variant="light"
+                className="h-9 w-9 min-w-9 rounded-lg"
+                isIconOnly
+                onPress={toggleSidebar}
+              >
+                <PanelLeft className="size-4" />
+                <span className="sr-only">Toggle Sidebar</span>
+              </Button>
+
+              <img
+                src="https://github.com/carlosmfreitas2409.png"
+                alt="Carlos Freitas"
+                className="size-6 rounded-full ring-offset-1 transition-all hover:ring-2 hover:ring-default-300"
+              />
+            </motion.div>
+          </div>
+
+          {/* <div className="flex items-center justify-between p-4 pb-2 group-data-[state=collapsed]:px-3">
             <span className="font-medium text-black text-xl leading-5 transition-[width,opacity] duration-200 ease-linear group-data-[state=collapsed]:w-0 group-data-[state=collapsed]:opacity-0">
               timer
             </span>
@@ -66,10 +108,10 @@ export function Sidebar() {
               <img
                 src="https://github.com/carlosmfreitas2409.png"
                 alt="Carlos Freitas"
-                className="size-6 rounded-full ring-offset-1 transition-all hover:ring-2 hover:ring-default-foreground/40 group-data-[state=collapsed]:opacity-0"
+                className="size-6 rounded-full ring-offset-1 transition-all hover:ring-2 hover:ring-default-300 group-data-[state=collapsed]:opacity-0"
               />
             </div>
-          </div>
+          </div> */}
 
           <div className="flex shrink-0 px-4 py-2 group-data-[state=collapsed]:px-2">
             <WorkspaceSwitcher />

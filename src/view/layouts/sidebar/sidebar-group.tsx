@@ -27,7 +27,7 @@ const SidebarGroupLabel = forwardRef<
     <div
       ref={ref}
       className={cn(
-        'flex h-8 shrink-0 items-center font-medium text-default-foreground text-xs transition-[margin,opacity] duration-200 ease-linear',
+        'flex h-8 shrink-0 items-center font-medium text-default-500 text-xs transition-[margin,opacity] duration-200 ease-linear',
         'group-data-[state=collapsed]:-mt-8 group-data-[state=collapsed]:opacity-0',
         className,
       )}

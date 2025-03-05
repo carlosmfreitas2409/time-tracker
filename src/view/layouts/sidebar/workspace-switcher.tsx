@@ -23,7 +23,7 @@ export function WorkspaceSwitcher() {
               <span className="font-medium text-foreground text-sm leading-5">
                 My workspace
               </span>
-              <span className="text-xs">Free plan</span>
+              <span className="text-default-500 text-xs">Free plan</span>
             </div>
           </div>
 
@@ -42,7 +42,7 @@ export function WorkspaceSwitcher() {
         <Divider />
 
         <div className="w-full p-2">
-          <span className="px-1 font-medium text-default-foreground text-xs">
+          <span className="px-1 font-medium text-default-500 text-xs">
             Workspaces
           </span>
 

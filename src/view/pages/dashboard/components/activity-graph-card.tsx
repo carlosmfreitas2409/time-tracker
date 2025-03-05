@@ -39,13 +39,13 @@ export function ActivityGraphCard() {
   return (
     <Card shadow="none" className="border">
       <CardHeader className="border-b">
-        <Activity className="mr-2 size-4 text-default-foreground" />
+        <Activity className="mr-2 size-4" />
         <h4 className="font-semibold">Activity Graph</h4>
       </CardHeader>
 
       <CardBody>
         <div className="inline-block min-w-full">
-          <div className="mb-2 grid grid-cols-5 gap-1 pl-5 text-default-foreground text-xs">
+          <div className="mb-2 grid grid-cols-5 gap-1 pl-5 text-default-500 text-xs">
             {months.map((month, index) => (
               <div
                 key={month}
@@ -57,7 +57,7 @@ export function ActivityGraphCard() {
           </div>
 
           <div className="flex">
-            <div className="mr-2 flex flex-col justify-between gap-1 text-default-foreground text-xs">
+            <div className="mr-2 flex flex-col justify-between gap-1 text-default-500 text-xs">
               {daysOfWeek.map((day, idx) => {
                 const key = idx;
 

@@ -81,9 +81,9 @@
 }
 
 @layer base {
-  /* * {
-    @apply border-border;
-  } */
+  * {
+    border-color: hsl(var(--timer-divider));
+  }
 
   html {
     font-family: "Inter", ui-sans-serif, system-ui, sans-serif,

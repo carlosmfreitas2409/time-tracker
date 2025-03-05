@@ -34,7 +34,7 @@ export function LastSevenDaysCard() {
   return (
     <Card shadow="none" className="border">
       <CardHeader className="border-b">
-        <Calendar className="mr-2 size-4 text-default-foreground" />
+        <Calendar className="mr-2 size-4" />
         <h4 className="font-semibold">Last 7 days</h4>
       </CardHeader>
 
@@ -51,7 +51,7 @@ export function LastSevenDaysCard() {
               key={key}
               className="@container flex items-center justify-between gap-6 px-3 py-2"
             >
-              <span className="w-full max-w-[75px] truncate text-default-foreground text-sm">
+              <span className="w-full max-w-[75px] truncate text-default-500 text-sm">
                 {formatRelative(new Date(item.date))}
               </span>
 
@@ -66,7 +66,7 @@ export function LastSevenDaysCard() {
                 </ChartContainer>
               </div>
 
-              <span className="font-medium text-default-foreground text-sm">
+              <span className="font-medium text-default-500 text-sm">
                 {formatHumanReadableDuration(item.duration)}
               </span>
             </div>

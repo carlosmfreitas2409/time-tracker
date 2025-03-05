@@ -1,92 +1,155 @@
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
+import { Link } from '@tanstack/react-router';
 
 import { ChevronRight, Eye, EyeOff, Lock, Mail } from 'lucide-react';
 
-import { Input } from '@heroui/input';
 import { Button } from '@heroui/button';
-import { Checkbox } from '@heroui/checkbox';
+
+import { authClient } from '@/app/lib/auth';
 
 import { GlobResMark } from '@/assets/icons/globres-mark';
+import { Google } from '@/assets/icons/google';
+
+import { RHFForm, RHFInput, RHFCheckbox } from '@/view/components/rhf';
+
+const signInSchema = z.object({
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(8, 'Password must be at least 8 characters long'),
+  rememberMe: z.boolean(),
+});
+
+type SignInForm = z.infer<typeof signInSchema>;
 
 export function SignInPage() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-  function toggleVisibility() {
-    setIsPasswordVisible(!isPasswordVisible);
+  const form = useForm<SignInForm>({
+    resolver: zodResolver(signInSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+      rememberMe: false,
+    },
+  });
+
+  const { formState, handleSubmit } = form;
+
+  async function handleSignIn(data: SignInForm) {
+    await authClient.signIn.email(data);
   }
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center">
-      <div className="container mt-4 flex items-center justify-between">
+    <div className="container relative flex min-h-screen flex-col py-4">
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <GlobResMark />
           <h2 className="font-bold text-lg">GlobRes</h2>
         </div>
 
-        <Button color="primary" variant="bordered" size="sm">
+        <Button
+          as={Link}
+          to="/auth/sign-up"
+          color="primary"
+          variant="bordered"
+          size="sm"
+        >
           Sign Up for free
           <ChevronRight className="size-4" />
         </Button>
       </div>
 
-      <div className="flex max-w-xs flex-1 flex-col justify-center">
-        <h1 className="font-bold text-2xl">Welcome to GlobRes</h1>
-
-        <p className="mt-1 text-muted-foreground text-sm">
-          Sign in your GlobRes account to access all your employee services.
-        </p>
-
-        <div className="mt-6 space-y-3">
-          <Input
-            type="email"
-            label="Email"
-            placeholder="Enter your email"
-            startContent={<Mail className="size-5 text-muted-foreground" />}
-          />
-
-          <Input
-            type={isPasswordVisible ? 'text' : 'password'}
-            label="Password"
-            placeholder="Enter your password"
-            startContent={<Lock className="size-5 text-muted-foreground" />}
-            endContent={
-              <button
-                type="button"
-                className="text-muted-foreground focus:outline-none"
-                aria-label="Toggle password visibility"
-                onClick={toggleVisibility}
-              >
-                {isPasswordVisible ? (
-                  <EyeOff className="pointer-events-none size-5" />
-                ) : (
-                  <Eye className="pointer-events-none size-5" />
-                )}
-              </button>
-            }
-          />
-
-          <Button color="primary" className="w-full">
-            Continue
-          </Button>
-        </div>
-
-        <div className="mt-3 flex justify-between text-sm">
-          <div className="flex items-center gap-1 text-muted-foreground">
-            <Checkbox size="sm">Remember Me</Checkbox>
+      <div className="flex flex-1 items-center justify-center">
+        <div className="flex w-full max-w-sm flex-col gap-6 p-4">
+          <div className="space-y-1">
+            <h1 className="font-bold text-2xl">Welcome to Tracker</h1>
+            <p className="text-default-500 text-sm">
+              Sign in your Tracker account to access all your employee services.
+            </p>
           </div>
 
-          <a href="/" className="text-primary underline">
-            Forgot your password?
-          </a>
-        </div>
+          <div className="flex w-full flex-col gap-2">
+            <RHFForm
+              methods={form}
+              onSubmit={handleSubmit(handleSignIn)}
+              className="flex w-full flex-col gap-4"
+            >
+              <RHFInput
+                type="email"
+                name="email"
+                label="Email"
+                labelPlacement="outside"
+                placeholder="Enter your email"
+                startContent={<Mail className="size-5 text-default-500" />}
+                isRequired
+              />
 
-        <div className="mt-4">
-          <span className="font-medium text-muted-foreground text-xs">
-            Get started with GlobRes.{' '}
-            <a href="/auth/sign-up" className="text-primary underline">
-              Sign Up
-            </a>
-          </span>
+              <RHFInput
+                type={isPasswordVisible ? 'text' : 'password'}
+                name="password"
+                label="Password"
+                labelPlacement="outside"
+                placeholder="Enter your password"
+                autoComplete="password"
+                startContent={<Lock className="size-5 text-default-500" />}
+                endContent={
+                  <button
+                    type="button"
+                    className="text-default-500 focus:outline-none [&>svg]:pointer-events-none [&>svg]:size-4"
+                    aria-label="Toggle password visibility"
+                    onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                  >
+                    {isPasswordVisible ? <EyeOff /> : <Eye />}
+                  </button>
+                }
+                isRequired
+              />
+
+              <div className="flex justify-between">
+                <RHFCheckbox name="rememberMe" size="sm">
+                  Remember Me
+                </RHFCheckbox>
+
+                <a href="/" className="text-primary text-sm underline">
+                  Forgot your password?
+                </a>
+              </div>
+
+              <Button
+                type="submit"
+                color="primary"
+                className="w-full"
+                isLoading={formState.isSubmitting}
+              >
+                Continue
+              </Button>
+            </RHFForm>
+
+            <div className="my-2 flex w-full flex-shrink items-center justify-center gap-2">
+              <div className="grow basis-0 border-b border-dashed" />
+              <span className="text-default-500 text-xs uppercase leading-none">
+                or
+              </span>
+              <div className="grow basis-0 border-b border-dashed" />
+            </div>
+
+            <Button variant="bordered" className="w-full">
+              <Google />
+              Continue with Google
+            </Button>
+          </div>
+
+          <div className="w-full">
+            <span className="font-medium text-default-500 text-xs">
+              Get started with Tracker.{' '}
+              <Link to="/auth/sign-up" className="text-primary underline">
+                Sign Up
+              </Link>
+            </span>
+          </div>
         </div>
       </div>
     </div>

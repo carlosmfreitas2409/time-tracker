@@ -76,15 +76,21 @@ export default {
       themes: {
         light: {
           colors: {
-            background: 'hsl(0 0% 100%)',
-            foreground: 'hsl(220 24% 12%)',
-            default: {
-              DEFAULT: 'hsl(240 2% 91%)',
-              foreground: 'hsl(240 3.8% 46.1%)',
-            },
+            background: '#FFFFFF',
+            divider: '#E0E0E0',
             primary: {
-              DEFAULT: 'hsl(343 100% 40%)',
-              foreground: 'hsl(0 0% 100%)',
+              // '50': '#f9dfe6',
+              // '100': '#f0b3c4',
+              // '200': '#e786a1',
+              // '300': '#de597f',
+              // '400': '#d52d5c',
+              // '500': '#cc003a',
+              // '600': '#a80030',
+              // '700': '#850026',
+              // '800': '#61001c',
+              // '900': '#3d0011',
+              foreground: '#FFFFFF',
+              DEFAULT: '#cc003a',
             },
           },
         },
