@@ -3,23 +3,22 @@ import { useLocation } from '@tanstack/react-router';
 
 import { motion } from 'motion/react';
 
+import { cn } from '@heroui/theme';
+
 import { PanelLeft } from 'lucide-react';
 
 import { Button } from '@heroui/button';
+
+import { GlobResMark } from '@/assets/icons/globres-mark';
 
 import { WorkspaceSwitcher } from './workspace-switcher';
 import { SidebarMenuItem } from './sidebar-menu-item';
 import { SidebarGroup, SidebarGroupLabel } from './sidebar-group';
 
 import { navItems } from '../mock';
-import { cn } from '@heroui/theme';
-import { GlobResMark } from '@/assets/icons/globres-mark';
 
 const SIDEBAR_COOKIE_NAME = '_tm_sidebar_state';
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
-
-const SIDEBAR_WIDTH = '16rem';
-const SIDEBAR_WIDTH_ICON = '3.25rem';
 
 export function Sidebar() {
   const { pathname } = useLocation();
@@ -37,19 +36,12 @@ export function Sidebar() {
   }
 
   return (
-    <div
-      data-state={state}
-      className="group peer hidden md:block"
-      style={
-        {
-          '--sidebar-width': SIDEBAR_WIDTH,
-          '--sidebar-width-icon': SIDEBAR_WIDTH_ICON,
-        } as React.CSSProperties
-      }
-    >
-      <div className="relative h-svh w-[--sidebar-width] bg-transparent transition-[width] duration-200 ease-linear group-data-[state=collapsed]:w-[--sidebar-width-icon]" />
+    <div data-state={state} className="group peer hidden bg-sidebar md:block">
+      <div className="sticky top-0 z-10 hidden h-svh w-[--sidebar-width] overflow-y-auto transition-[width] duration-200 ease-linear group-data-[state=collapsed]:w-[--sidebar-width-icon] md:flex">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="-left-2/3 pointer-events-none absolute bottom-0 aspect-square w-[140%] translate-y-1/4 rounded-full bg-[conic-gradient(from_32deg_at_center,#855AFC_0deg,#3A8BFD_72deg,#00FFF9_144deg,#5CFF80_198deg,#EAB308_261deg,#f00_360deg)] opacity-15 blur-[75px]" />
+        </div>
 
-      <div className="fixed inset-y-0 left-0 z-10 hidden h-svh w-[--sidebar-width] transition-[left,right,width] duration-200 ease-linear group-data-[state=collapsed]:w-[--sidebar-width-icon] md:flex">
         <div className="flex h-full w-full flex-col">
           <div
             className={cn(
@@ -88,30 +80,6 @@ export function Sidebar() {
               />
             </motion.div>
           </div>
-
-          {/* <div className="flex items-center justify-between p-4 pb-2 group-data-[state=collapsed]:px-3">
-            <span className="font-medium text-black text-xl leading-5 transition-[width,opacity] duration-200 ease-linear group-data-[state=collapsed]:w-0 group-data-[state=collapsed]:opacity-0">
-              timer
-            </span>
-
-            <div className="flex items-center gap-2">
-              <Button
-                variant="light"
-                className="h-7 w-7 min-w-7 rounded-lg"
-                isIconOnly
-                onPress={toggleSidebar}
-              >
-                <PanelLeft className="size-4" />
-                <span className="sr-only">Toggle Sidebar</span>
-              </Button>
-
-              <img
-                src="https://github.com/carlosmfreitas2409.png"
-                alt="Carlos Freitas"
-                className="size-6 rounded-full ring-offset-1 transition-all hover:ring-2 hover:ring-default-300 group-data-[state=collapsed]:opacity-0"
-              />
-            </div>
-          </div> */}
 
           <div className="flex shrink-0 px-4 py-2 group-data-[state=collapsed]:px-2">
             <WorkspaceSwitcher />

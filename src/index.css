@@ -81,6 +81,12 @@
 }
 
 @layer base {
+  :root {
+    --sidebar: 0 0% 96.1%;
+    --sidebar-width: 16rem;
+    --sidebar-width-icon: 3.25rem;
+  }
+
   * {
     border-color: hsl(var(--timer-divider));
   }
@@ -101,6 +107,6 @@
   }
 
   body {
-    @apply scroll-smooth bg-background text-foreground;
+    @apply scroll-smooth bg-background text-foreground overflow-auto;
   }
 }

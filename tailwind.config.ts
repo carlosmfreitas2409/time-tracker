@@ -6,7 +6,7 @@ export default {
   darkMode: ['class'],
   content: [
     './src/**/*.{ts,tsx,js,jsx}',
-    './node_modules/@heroui/theme/dist/components/(avatar|button|card|checkbox|divider|input|popover|ripple|spinner|form).js',
+    './node_modules/@heroui/theme/dist/components/(avatar|button|card|checkbox|chip|divider|input|popover|ripple|spinner|form).js',
   ],
   theme: {
     container: {
@@ -16,6 +16,9 @@ export default {
     extend: {
       containers: {
         xs: '14rem',
+      },
+      colors: {
+        sidebar: 'hsl(var(--sidebar))',
       },
     },
   },
